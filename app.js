@@ -12,6 +12,31 @@ const app = express(); // create express app object
 
 app.use(bodyParser.json());
 
+const user = (userId) => {
+    return User.findById(userId)
+        .then((user) => {
+            return {
+                ...user._doc,
+                createdEvents: events.bind(this, user._doc.createdEvents),
+            };
+        })
+        .catch((err) => {
+            throw err;
+        });
+};
+
+const events = (eventIds) => {
+    return Event.find({ _id: { $in: eventIds } })
+        .then((events) => {
+            return events.map((e) => ({
+                ...e._doc,
+                creator: user.bind(this, e.creator),
+            }));
+        })
+        .catch((err) => {
+            throw err;
+        });
+};
 /* 
 Express app api 
 app.get("/", (req, res, next) => {
@@ -32,14 +57,14 @@ app.use(
             description: String!
             price: Float!
             date: String!
-            creator: ID!
+            creator: User!
           }
 
           type User {
             _id: ID!
             email: String!
             password: String
-
+            createdEvents: [Event!]
           }
 
           input EventInput {
@@ -72,9 +97,13 @@ app.use(
         rootValue: {
             events: () => {
                 return Event.find()
+                    .populate("creator")
                     .then((events) => {
                         return events.map((e) => {
-                            return {...e._doc };
+                            return {
+                                ...e._doc,
+                                creator: user.bind(this, e._doc.creator),
+                            };
                         });
                     })
                     .catch((e) => {
