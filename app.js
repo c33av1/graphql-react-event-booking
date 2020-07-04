@@ -2,11 +2,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const graphqlHttp = require("express-graphql");
 const { buildSchema } = require("graphql");
+const mongoose = require("mongoose");
+
+const Event = require("./models/event");
 
 const app = express(); // create express app object
-
-// TODO - remove when linked with DB
-const events = [];
 
 app.use(bodyParser.json());
 
@@ -54,23 +54,51 @@ app.use(
         `),
         rootValue: {
             events: () => {
-                return events;
+                return Event.find()
+                    .then((events) => {
+                        return events.map((e) => {
+                            return {...e._doc };
+                        });
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                    });
             },
-            createEvent: ({ eventInput: { title, description, price } }) => {
-                const event = {
-                    _id: Math.random().toString(),
+            createEvent: (args) => {
+                const {
+                    eventInput: { title, description, price, date },
+                } = args;
+
+                const event = new Event({
                     title,
                     description,
-                    price: +price, // convert to float or int
-                    date: new Date().toISOString(),
-                };
+                    price: +price,
+                    date: new Date(date),
+                });
 
-                events.push(event);
-                return event;
+                return event
+                    .save()
+                    .then((result) => {
+                        console.log(result);
+                        return {...result._doc };
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        throw err;
+                    });
             },
         },
         graphiql: true,
     })
 );
 
-app.listen(3000, () => console.log("listening at 3000"));
+mongoose
+    .connect(
+        `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}/${process.env.MONGO_DB}?retryWrites=true&w=majority`
+    )
+    .then(() => {
+        app.listen(3000, () => console.log("listening at 3000"));
+    })
+    .catch((err) => {
+        console.log(err);
+    });
