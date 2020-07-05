@@ -1,0 +1,12 @@
+{
+  "editor.wordWrap": "on",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "tabnine.experimentalAutoImports": true,
+  "editor.formatOnSave": true,
+  "workbench.colorTheme": "Visual Studio Dark",
+  "launch": {},
+  "files.associations": {
+    "*.js": "javascriptreact"
+  }
+}
