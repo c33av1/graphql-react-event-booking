@@ -8,6 +8,7 @@
     padding: 0 1rem;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .main-navigation__logo h1 {
@@ -17,7 +18,7 @@
 }
 
 .main-navigation__items {
-    margin-left: 1.5rem;
+    margin-right: 1.5rem;
 }
 
 .main-navigation__items ul {
@@ -31,14 +32,24 @@
     margin: 0 1rem;
 }
 
-.main-navigation__items a {
-    text-decoration: none;
+.main-navigation__items a,
+.main-navigation__items button {
     color: black;
+    background: none;
+    border: none;
+    text-decoration: none;
+    font: inherit;
+    padding: 0px;
+    cursor: pointer;
 }
 
 .main-navigation__items a:hover,
-.main-navigation__items a:active {
+.main-navigation__items a:active,
+.main-navigation__items button:hover,
+.main-navigation__items button:active {
     color: white;
+    background: none;
+    border: none;
 }
 
 .main-navigation__items a.active {

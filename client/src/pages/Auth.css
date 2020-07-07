@@ -10,6 +10,14 @@
     display: block;
 }
 
+.form-control input {
+    box-shadow: 1px 1px 5px rgb(0, 0, 0, 0.26);
+    border: none;
+    padding: 10px;
+    color: grey;
+    border-radius: 5px;
+}
+
 .form-control label {
     margin-bottom: 0.5rem;
 }
@@ -24,9 +32,8 @@
     color: black;
     border: 1px solid orange;
     border-radius: 5px;
-    padding: 0.5rem 1rem;
+    padding: 0.7rem 1rem;
     margin-right: 1rem;
-    font-weight: bold;
     box-shadow: 1px 1px 5px rgb(0, 0, 0, 0.26);
     cursor: pointer;
 }
