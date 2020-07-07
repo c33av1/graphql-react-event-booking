@@ -2,4 +2,47 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
+    font-size: 16px;
+}
+
+.form-control label,
+.form-control input {
+    width: 100%;
+    display: block;
+}
+
+.form-control input {
+    box-shadow: 1px 1px 5px rgb(0, 0, 0, 0.26);
+    border: none;
+    padding: 10px;
+    color: grey;
+    border-radius: 5px;
+}
+
+.form-control label {
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    margin-bottom: 1rem;
+}
+
+.form-actions button,
+.btn {
+    font: inherit;
+    background: orange;
+    color: black;
+    border: 1px solid orange;
+    border-radius: 5px;
+    padding: 0.7rem 1rem;
+    margin-right: 1rem;
+    box-shadow: 1px 1px 5px rgb(0, 0, 0, 0.26);
+    cursor: pointer;
+}
+
+.form-actions button:hover,
+.btn:hover,
+.btn:active {
+    background: #ffa500cc;
+    border-color: #ffa500cc;
 }
