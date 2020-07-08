@@ -9,7 +9,7 @@ module.exports = {
         }
 
         try {
-            const bookings = await Booking.find();
+            const bookings = await Booking.find({ user: req.userId });
             return bookings.map((b) => transformBooking(b));
         } catch (err) {
             throw err;
