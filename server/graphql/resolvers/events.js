@@ -3,13 +3,13 @@ const Event = require("../../models/event");
 const { transformEvent } = require("./merge");
 
 module.exports = {
-    events: () => {
-        return Event.find()
-            .populate("creator")
-            .then((events) => events.map((e) => transformEvent(e)))
-            .catch((e) => {
-                console.log(e);
-            });
+    events: async() => {
+        try {
+            const events = await Event.find();
+            return events.map((e) => transformEvent(e));
+        } catch (err) {
+            throw err;
+        }
     },
     createEvent: async(args, req) => {
         const { isAuth, userId } = req;

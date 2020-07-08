@@ -53,8 +53,8 @@ class AuthPage extends Component {
     const token = this.context.token;
     const requestBody = {
       query: `
-          mutation {
-            createEvent(eventInput: {title: "${title}", description: "${description}", price: ${+price}, date: "${date}"}){
+          mutation CreateEvent(title: String!, description: String!, price: Float!, date: String! ){
+            createEvent(eventInput: {title: $title, description: $description, price: $price, date: $date}){
               _id
               title
               description
@@ -63,6 +63,12 @@ class AuthPage extends Component {
             }
           }
         `,
+      variables: {
+        title,
+        description,
+        price: +price,
+        date,
+      },
     };
 
     fetch("http://localhost:5000/graphql", {
@@ -160,14 +166,17 @@ class AuthPage extends Component {
     const { _id: eventId } = this.state.selectedEvent;
     const requestBody = {
       query: `
-          mutation {
-            bookEvent(eventId: "${eventId}"){
+          mutation BookEvent($id: ID!) {
+            bookEvent(eventId: $id){
               _id
               createdAt
               updatedAt
             }
           }
         `,
+      variables: {
+        id: eventId,
+      },
     };
 
     fetch("http://localhost:5000/graphql", {
